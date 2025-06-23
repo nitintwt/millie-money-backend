@@ -17,4 +17,14 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+  transactions Transaction[]
+}
+
+model Transaction{
+  id      Int     @id @default(autoincrement())
+  type    String
+  amount  Int
+  date    DateTime @default(now())
+  owner   User?    @relation(fields: [ownerId], references: [id])
+  ownerId Int
 }
