@@ -1,5 +1,5 @@
 import { ChatGroq } from "@langchain/groq";
-import addTransaction from "./utils/addTransaction";
+import addTransaction from "./utils/addTransaction.js";
 import { HumanMessage, AIMessage, SystemMessage } from "@langchain/core/messages";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { StateGraph, MessagesAnnotation } from "@langchain/langgraph";
@@ -51,3 +51,9 @@ const agent = async ()=>{
 }
 
 export default agent
+
+;(async () => {
+  const millie = await agent()
+  const response = await millie.invoke({messages:[new HumanMessage("I spent 500 on food on 30th june")]}, {configurable:{thread_id:"1"}})
+  console.log(response.messages[response.messages.length - 1].content)
+})()

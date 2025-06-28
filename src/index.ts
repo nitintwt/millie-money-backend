@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import { app } from './app'
+import { server } from './app'
 import connectDb from './db/index.js'
 
 dotenv.config({
@@ -8,7 +8,7 @@ dotenv.config({
 
 connectDb()
 .then(()=>{
-  app.listen(process.env.PORT, ()=>{
+  server.listen(process.env.PORT, ()=>{
     console.log("Server is running ")
   })
 })

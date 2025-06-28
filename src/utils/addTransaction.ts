@@ -13,9 +13,9 @@ const addTransaction = new DynamicStructuredTool({
   name: "add_transaction",
   description: "Add a transaction (income or expense) to the database. Requires type, amount, date, and ownerId.",
   schema: transactionSchema,
-  func: async ({ type, amount, date, ownerId }) => {
+  func: async ({ type, amount, date, ownerId=1 }) => {
     try {
-      await prisma.transaction.create({
+      const transaction= await prisma.transaction.create({
         data: {
           type,
           amount,
@@ -23,6 +23,7 @@ const addTransaction = new DynamicStructuredTool({
           ownerId
         }
       });
+      console.log("added" , transaction )
       return { success: true};
     } catch (error) {
       return {
