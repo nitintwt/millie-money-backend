@@ -6,21 +6,23 @@ const transactionSchema = z.object({
   type: z.string(),
   amount: z.number(),
   date: z.string(),
-  ownerId: z.number()
+  ownerId: z.number(),
+  category: z.string()
 });
 
 const addTransaction = new DynamicStructuredTool({
   name: "add_transaction",
   description: "Add a transaction (income or expense) to the database. Requires type, amount, date, and ownerId.",
   schema: transactionSchema,
-  func: async ({ type, amount, date, ownerId=1 }) => {
+  func: async ({ type, amount, date, ownerId=1 , category }) => {
     try {
       const transaction= await prisma.transaction.create({
         data: {
           type,
           amount,
           date: new Date(date),
-          ownerId
+          ownerId,
+          category
         }
       });
       console.log("added" , transaction )
